@@ -19,9 +19,10 @@ export default GoogleMapCoreView.extend({
   classNames: ['google-info-window'],
 
   googleFQCN:   'google.maps.InfoWindow',
+  model:        computed.alias('controller.model'),
 
   // will be either the marker using us, or the component if this is a detached info-window
-  templateName: any('controller.templateName', 'parentView.infoWindowTemplateName'),
+  templateName: any('model.templateName', 'parentView.infoWindowTemplateName'),
 
   googleProperties: {
     zIndex:    {event: 'zindex_changed', cast: helpers.cast.integer},
@@ -44,21 +45,21 @@ export default GoogleMapCoreView.extend({
 
   _coreGoogleEvents: ['closeclick'],
 
-  // aliased from controller so that if they are not defined they use the values from the controller
-  zIndex:            alias('controller.zIndex'),
-  lat:               alias('controller.lat'),
-  lng:               alias('controller.lng'),
+  // aliased from model so that if they are not defined they use the values from the model
+  zIndex:            alias('model.zIndex'),
+  lat:               alias('model.lat'),
+  lng:               alias('model.lng'),
   anchor:            oneWay('parentView.infoWindowAnchor'),
 
-  visible: computed('parentView.isInfoWindowVisible', 'controller.isVisible', function (key, value) {
+  visible: computed('parentView.isInfoWindowVisible', 'model.isVisible', function (key, value) {
     var isMarkerIW = this.get('isMarkerInfoWindow');
     if (arguments.length < 2) {
       if (isMarkerIW) {
         value = this.get('parentView.isInfoWindowVisible');
       }
       else {
-        value = this.getWithDefault('controller.isVisible', true);
-        this.set('controller.isVisible', value);
+        value = this.getWithDefault('model.isVisible', true);
+        this.set('model.isVisible', value);
       }
     }
     else {
@@ -66,7 +67,7 @@ export default GoogleMapCoreView.extend({
         this.set('parentView.isInfoWindowVisible', value);
       }
       else {
-        this.set('controller.isVisible', value);
+        this.set('model.isVisible', value);
       }
     }
     return value;

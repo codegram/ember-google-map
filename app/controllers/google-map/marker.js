@@ -2,6 +2,6 @@ import Ember from 'ember';
 
 /**
  * @class GoogleMapMarkerController
- * @extends Ember.ObjectController
+ * @extends Ember.Controller
  */
-export default Ember.ObjectController.extend({});
+export default Ember.Controller.extend({});

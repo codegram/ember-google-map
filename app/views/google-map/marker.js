@@ -11,6 +11,7 @@ var oneWay = computed.oneWay;
  */
 export default GoogleMapCoreView.extend({
   googleFQCN: 'google.maps.Marker',
+  model:      computed.alias('controller.model'),
 
   googleProperties: {
     isClickable: {name: 'clickable', event: 'clickable_changed'},
@@ -31,28 +32,28 @@ export default GoogleMapCoreView.extend({
 
   _coreGoogleEvents:      ['click'],
 
-  // aliased from controller so that if they are not defined they use the values from the controller
-  title:                  alias('controller.title'),
-  opacity:                alias('controller.opacity'),
-  zIndex:                 alias('controller.zIndex'),
-  isVisible:              alias('controller.isVisible'),
-  isDraggable:            alias('controller.isDraggable'),
-  isClickable:            alias('controller.isClickable'),
-  icon:                   alias('controller.icon'),
-  lat:                    alias('controller.lat'),
-  lng:                    alias('controller.lng'),
+  // aliased from model so that if they are not defined they use the values from the model
+  title:                  alias('model.title'),
+  opacity:                alias('model.opacity'),
+  zIndex:                 alias('model.zIndex'),
+  isVisible:              alias('model.isVisible'),
+  isDraggable:            alias('model.isDraggable'),
+  isClickable:            alias('model.isClickable'),
+  icon:                   alias('model.icon'),
+  lat:                    alias('model.lat'),
+  lng:                    alias('model.lng'),
 
-  // get the info window template name from the component or own controller
-  infoWindowTemplateName: computed('controller.infoWindowTemplateName', 'parentView.markerInfoWindowTemplateName', function () {
-    return this.get('controller.infoWindowTemplateName') || this.get('parentView.markerInfoWindowTemplateName');
+  // get the info window template name from the component or own model
+  infoWindowTemplateName: computed('model.infoWindowTemplateName', 'parentView.markerInfoWindowTemplateName', function () {
+    return this.get('model.infoWindowTemplateName') || this.get('parentView.markerInfoWindowTemplateName');
   }).readOnly(),
 
   infoWindowAnchor: oneWay('googleObject'),
 
-  isInfoWindowVisible: alias('controller.isInfoWindowVisible'),
+  isInfoWindowVisible: alias('model.isInfoWindowVisible'),
 
-  hasInfoWindow: computed('parentView.markerHasInfoWindow', 'controller.hasInfoWindow', function () {
-    var fromCtrl = this.get('controller.hasInfoWindow');
+  hasInfoWindow: computed('parentView.markerHasInfoWindow', 'model.hasInfoWindow', function () {
+    var fromCtrl = this.get('model.hasInfoWindow');
     if (fromCtrl === null || fromCtrl === undefined) {
       return !!this.get('parentView.markerHasInfoWindow');
     }
